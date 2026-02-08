@@ -50,16 +50,19 @@ echo "=============================="
 echo "🔐 IAM"
 echo "=============================="
 
-IAM_ROLE=$(md $METADATA_URL/meta-data/iam/security-credentials/ || true)
+# Fetch IAM role name
+IAM_ROLE=$(curl -s "$METADATA_URL/meta-data/iam/security-credentials/" || true)
 
 if [[ -n "$IAM_ROLE" ]]; then
   echo "IAM Role           : $IAM_ROLE"
   echo
   echo "IAM Credentials:"
-  md "$METADATA_URL/meta-data/iam/security-credentials/$IAM_ROLE"
+  curl -s "$METADATA_URL/meta-data/iam/security-credentials/$IAM_ROLE"
 else
   echo "IAM Role           : None"
 fi
+
+
 
 echo
 echo "=============================="
